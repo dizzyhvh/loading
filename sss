@@ -1,0 +1,136 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local ImageLabel = Instance.new("ImageLabel")
+local UICorner_2 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
+local TipLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 1.000
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.240232751, 0, 0.290529698, 0)
+Frame.Size = UDim2.new(0, 580, 0, 210)
+
+UICorner.Parent = Frame
+
+ImageLabel.Parent = Frame
+ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ImageLabel.BorderSizePixel = 0
+ImageLabel.Position = UDim2.new(0.000577518833, 0, -0.00470842654, 0)
+ImageLabel.Size = UDim2.new(0, 580, 0, 209)
+ImageLabel.Image = "http://www.roblox.com/asset/?id=14435328111"
+
+UICorner_2.Parent = ImageLabel
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 64, 26)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.113793105, 0, 0, 0)
+TextLabel.Size = UDim2.new(0, 414, 0, 50)
+TextLabel.Font = Enum.Font.PatrickHand
+TextLabel.Text = "Forest fire."
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+TipLabel.Name = "TipLabel"
+TipLabel.Parent = Frame
+TipLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TipLabel.BackgroundTransparency = 1.000
+TipLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TipLabel.BorderSizePixel = 0
+TipLabel.Position = UDim2.new(0.18965517, 0, 0.371428579, 0)
+TipLabel.Size = UDim2.new(0, 339, 0, 50)
+TipLabel.Font = Enum.Font.PatrickHand
+TipLabel.Text = "Progress (10%)"
+TipLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TipLabel.TextScaled = true
+TipLabel.TextSize = 14.000
+TipLabel.TextWrapped = true
+
+-- Scripts:
+
+local function RTDL_fake_script() -- Frame.LocalScript 
+	local script = Instance.new('LocalScript', Frame)
+
+	local frame = script.Parent -- assuming the script is a child of the frame you want to drag
+	
+	-- Create a variable to track mouse position and whether the frame is being dragged
+	local dragging = false
+	local dragInput = nil
+	local startPos = nil
+	local startMousePos = nil
+	
+	-- Function to start dragging
+	frame.InputBegan:Connect(function(input, gameProcessed)
+		if gameProcessed then return end -- Ignore if the input is already processed by other GUI elements
+	
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			-- Start dragging when left mouse button is clicked
+			dragging = true
+			dragInput = input
+			startPos = frame.Position
+			startMousePos = input.Position
+		end
+	end)
+	
+	-- Function to stop dragging
+	frame.InputEnded:Connect(function(input)
+		if input == dragInput then
+			dragging = false
+			dragInput = nil
+		end
+	end)
+	
+	-- Function to update frame position while dragging
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+			-- Calculate how far the mouse has moved
+			local delta = input.Position - startMousePos
+			-- Update frame position based on mouse movement
+			frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		end
+	end)
+end
+coroutine.wrap(RTDL_fake_script)()
+local function HUNKLZ_fake_script() -- TipLabel.LocalScript 
+	local script = Instance.new('LocalScript', TipLabel)
+
+	wait(3)
+	script.Parent.Text = "Progress (20%)"
+	wait(3)
+	script.Parent.Text = "Progress (30%)"
+	wait(0.1)
+	script.Parent.Text = "Progress (100%!)"
+	wait(0.1)
+	script.Parent.Text = "Loaded!"
+	wait(4)
+	script.Parent.Text = "Thank you for using our script!"
+	
+end
+coroutine.wrap(HUNKLZ_fake_script)()
+local function HWHN_fake_script() -- Frame.Script 
+	local script = Instance.new('Script', Frame)
+
+	task.wait(15)
+	script.Parent:Destroy()
+loadstring(game:HttpGet("https://gitlab.com/RobloxiaUntilDawn/robloxia-until-dawn/-/raw/main/script"))()
+end
+coroutine.wrap(HWHN_fake_script)()
